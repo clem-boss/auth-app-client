@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="container-form">
+        <h1>Login to your account</h1>
+        <mat-form-field appearance="fill">
+            <mat-label>Enter your username</mat-label>
+            <input matInput [(ngModel)]="Username">
+        </mat-form-field>
+    
+        <mat-form-field appearance="fill">
+            <mat-label>Enter your password</mat-label>
+            <input matInput [(ngModel)]="Password" [type]="Hide ? 'password' : 'text'">
+            <button mat-icon-button matSuffix (click)="Hide = !Hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="Hide">
+              <mat-icon>{{Hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+        </mat-form-field>
+        <mat-error *ngIf="this.Error">
+            {{this.Error}}
+        </mat-error>
+        <button mat-raised-button color="primary" (click)="OnFormSubmit()">Login</button>
+    </div>
+</div>

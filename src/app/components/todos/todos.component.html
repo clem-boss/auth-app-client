@@ -1,0 +1,17 @@
+<div class="container">
+    <div class="container-form">
+        <h1>👋 Welcome to the Todo Manager</h1>
+        <mat-form-field appearance="fill">
+            <mat-label>Ex. Do the washing-up</mat-label>
+            <input matInput [(ngModel)]="NewTodo">
+        </mat-form-field>
+        <mat-error *ngIf="this.Error">
+            {{this.Error}}
+        </mat-error>
+        <button mat-raised-button color="primary" (click)="AddNewTodo()">Add new Todo</button>
+
+    </div>
+    <mat-list role="list">
+        <app-todo-item *ngFor="let todo of Todos" [Item]="todo"></app-todo-item>
+    </mat-list>
+</div>
