@@ -1,6 +1,7 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
+import { AuthService } from './auth.service';
 import { TodoModel } from './models/todos.model';
 
 @Injectable({
@@ -8,18 +9,25 @@ import { TodoModel } from './models/todos.model';
 })
 export class TodoService {
   private TodosEndpoint: string = "http://localhost:3000/todos";
+  public Token!: string | undefined;
 
   constructor(private http: HttpClient) { }
 
-  public GetTodos(): Observable<TodoModel[]> {
-    return this.http.get<TodoModel[]>(this.TodosEndpoint)
+  public GetTodos() {
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', 'Bearer ' + this.Token);
+
+    return this.http.get<TodoModel[]>(this.TodosEndpoint, {headers: headers})
     .pipe(
       catchError(this.handleError)
     )
   }
 
   public PostTodo(todo: TodoModel): Observable<TodoModel> {
-    return this.http.post<TodoModel>(this.TodosEndpoint, todo)
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', 'Bearer ' + this.Token);
+
+    return this.http.post<TodoModel>(this.TodosEndpoint, todo, {headers: headers})
     .pipe(
       catchError(this.handleError)
     )
